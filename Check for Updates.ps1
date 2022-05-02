@@ -9,8 +9,8 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 
 function Get-WindowsUpdateModuleInstallationStatus
 {
-    #If statement to check if PSWindowsUpdate is already installed.
-    $InstalledModule = Get-InstalledModule -Name PSWindowsUpdate
+#If statement to check if PSWindowsUpdate is already installed.
+$InstalledModule = Get-InstalledModule -Name PSWindowsUpdate
 
 if ($InstalledModule = "PSWindowsUpdate")
 {
@@ -47,7 +47,7 @@ function Get-WindowsUpdateModule
 function Get-UpdateHistory
 {
 #Display past updates that have been installed
-get-wmiobject -class win32_quickfixengineering | Sort-Object InstalledOn | Format-Table Description, HotFixID, InstalledOn
+Get-WUHistory -MaxDate (Get-Date).AddDays(-30) -Last 100 | Format-Table Result, Date, Title 
 
 write-host "^^^^ Most recently installed updates are listed above ^^^^"
 }
@@ -82,9 +82,3 @@ function Get-UserInputForUpdates
 Set-ExecutionPolicy Bypass
 Get-WindowsUpdateModuleInstallationStatus
 Get-UserInputForUpdates
-
-
-
-
-
-
